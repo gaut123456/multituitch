@@ -1,4 +1,5 @@
 import express from 'express';
+
 const router = express.Router();
 
 router.get('/:userId', async (req, res) => {
@@ -6,14 +7,18 @@ router.get('/:userId', async (req, res) => {
   const clientToken = req.headers.authorization;
   const cursor = req.query.cursor;
 
-  if (!userId || !clientToken) {
-    return res.status(400).send('User ID and client token are required');
+  console.log('User ID:', userId);
+  console.log('Client token:', clientToken);
+
+  if (!clientToken) {
+    return res.status(400).send('Client token is required');
   }
 
   try {
     let url = `https://api.twitch.tv/helix/streams/followed?user_id=${userId}`;
+
     if (cursor) {
-      url += `&after=${cursor}`; 
+      url += `&after=${cursor}`;
     }
 
     const response = await fetch(url, {
@@ -28,12 +33,12 @@ router.get('/:userId', async (req, res) => {
     }
 
     const data = await response.json();
-    console.log('Followed channels:', data);
+    console.log('Live channels:', data);
 
     res.json(data);
   } catch (error) {
-    console.error('Error fetching followed channels:', error.message);
-    res.status(500).send('Error fetching followed channels');
+    console.error('Error fetching followed live channels:', error.message);
+    res.status(500).send('Error fetching followed live channels');
   }
 });
 
