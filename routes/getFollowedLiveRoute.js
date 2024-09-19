@@ -2,8 +2,8 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/:userID', async (req, res) => {
-const userId = req.params.userID;
+router.get('/:userId', async (req, res) => {
+const userId = req.params.userId;
   const clientToken = req.headers.authorization;
   const cursor = req.query.cursor;
   
