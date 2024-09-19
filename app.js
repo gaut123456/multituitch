@@ -20,7 +20,7 @@ app.use('/getFollowed', getFollowedRoutes);
 app.use('/addFavorites', addFavoritesRoutes);
 app.use('/deleteFavorites', deleteFavoritesRoutes);
 app.use('/getFollowedLive', getFollowedLiveRoutes);
-app.use('/getFavoritesRoute', getFavoritesRoute);
+app.use('/getFavorites', getFavoritesRoute);
 
 
 const PORT = process.env.PORT || 3000;
