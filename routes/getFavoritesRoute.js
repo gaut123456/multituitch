@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
-
+    console.log('User favorites:', user.favoris);
     res.status(200).json(user.favoris || []);
   } catch (error) {
     console.error('Error fetching favorites:', error);
