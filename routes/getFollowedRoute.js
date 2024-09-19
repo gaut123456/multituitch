@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-router.get('/followers/:userId', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   const userId = req.params.userId;
   const clientToken = req.headers.authorization;
 
