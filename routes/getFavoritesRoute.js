@@ -3,7 +3,7 @@ import userModel from '../models/userModels.js';
 
 const router = express.Router();
 
-router.get('/:id/favorites', async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const token = req.headers.authorization;
 
