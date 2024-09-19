@@ -10,7 +10,7 @@ router.get('/followers/:userId', async (req, res) => {
   }
 
   try {
-    const response = await fetch(`https://api.twitch.tv/helix/users/follows?to_id=${userId}`, {
+    const response = await fetch(`https://api.twitch.tv/helix/users/follows?user_id=${userId}`, {
       headers: {
         'Authorization': clientToken,
         'Client-Id': process.env.CLIENT_ID
