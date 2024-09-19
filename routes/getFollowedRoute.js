@@ -4,13 +4,19 @@ const router = express.Router();
 router.get('/:userId', async (req, res) => {
   const userId = req.params.userId;
   const clientToken = req.headers.authorization;
+  const cursor = req.query.cursor;
 
   if (!userId || !clientToken) {
     return res.status(400).send('User ID and client token are required');
   }
 
   try {
-    const response = await fetch(`https://api.twitch.tv/helix/channels/followed?user_id=${userId}`, {
+    let url = `https://api.twitch.tv/helix/channels/followed?user_id=${userId}`;
+    if (cursor) {
+      url += `&after=${cursor}`;
+    }
+
+    const response = await fetch(url, {
       headers: {
         'Authorization': clientToken,
         'Client-Id': process.env.CLIENT_ID
