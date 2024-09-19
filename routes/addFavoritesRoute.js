@@ -19,7 +19,7 @@ router.post('/:id', async (req, res) => {
   try {
     const response = await fetch('https://id.twitch.tv/oauth2/validate', {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
     });
 
