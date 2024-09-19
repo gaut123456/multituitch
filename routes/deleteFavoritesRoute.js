@@ -3,7 +3,7 @@ import userModel from '../models/userModels.js';
 
 const router = express.Router();
 
-router.post('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const { favoriteId } = req.body;
   const token = req.headers.authorization;
@@ -35,7 +35,7 @@ router.post('/:id', async (req, res) => {
 
     const updatedUser = await userModel.findOneAndUpdate(
       { userID: id },
-      { $addToSet: { favoris: favoriteId } },
+      { $pull: { favoris: favoriteId } },
       { new: true }
     );
 
@@ -45,8 +45,8 @@ router.post('/:id', async (req, res) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    console.error('Error adding favorite:', error);
-    res.status(500).send('Error adding favorite');
+    console.error('Error deleting favorite:', error);
+    res.status(500).send('Error deleting favorite');
   }
 });
 
