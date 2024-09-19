@@ -11,7 +11,7 @@ router.get('/:userId', async (req, res) => {
   }
 
   try {
-    let url = `https://api.twitch.tv/helix/channels/followed?user_id=${userId}`;
+    let url = `https://api.twitch.tv/helix/streams/followed?user_id=${userId}`;
     if (cursor) {
       url += `&after=${cursor}`; 
     }
