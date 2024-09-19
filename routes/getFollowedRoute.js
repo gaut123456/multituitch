@@ -10,11 +10,11 @@ router.get('/:userId', async (req, res) => {
   }
 
   try {
-    const response = await fetch(`https://api.twitch.tv/helix/users/follows?user_id=${userId}`, {
+    const response = await fetch(`https://api.twitch.tv/helix/channels/followed?user_id=${userId}`, {
       headers: {
         'Authorization': clientToken,
         'Client-Id': process.env.CLIENT_ID
-      },
+      }
     });
 
     if (!response.ok) {
@@ -23,9 +23,10 @@ router.get('/:userId', async (req, res) => {
 
     const data = await response.json();
     res.json(data);
+    console.log('Followed channels:', data);
   } catch (error) {
-    console.error('Error fetching followers:', error.message);
-    res.status(500).send('Error fetching followers');
+    console.error('Error fetching followed channels:', error.message);
+    res.status(500).send('Error fetching followed channels');
   }
 });
 
