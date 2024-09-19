@@ -6,6 +6,7 @@ import addFavoritesRoutes from './routes/addFavoritesRoute.js';
 import deleteFavoritesRoutes from './routes/deleteFavoritesRoute.js';
 import getFollowedLiveRoutes from './routes/getFollowedLiveRoute.js';
 import getFavoritesRoute from './routes/getFavoritesRoute.js';
+import getProfileInformationsRoute from './routes/getProfileInformationsRoute.js';
 import cors from 'cors';
 
 const app = express();
@@ -21,6 +22,7 @@ app.use('/addFavorites', addFavoritesRoutes);
 app.use('/deleteFavorites', deleteFavoritesRoutes);
 app.use('/getFollowedLive', getFollowedLiveRoutes);
 app.use('/getFavorites', getFavoritesRoute);
+app.use('/getProfileInformations', getProfileInformationsRoute);
 
 
 const PORT = process.env.PORT || 3000;
