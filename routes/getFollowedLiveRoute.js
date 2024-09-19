@@ -2,7 +2,8 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/:userID', async (req, res) => {
+const userId = req.params.userID;
   const clientToken = req.headers.authorization;
   const cursor = req.query.cursor;
   
@@ -11,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 
   try {
-    let url = 'https://api.twitch.tv/helix/streams';
+    let url = `https://api.twitch.tv/helix/streams?user_id=${userId}`;
     if (cursor) {
       url += `?after=${cursor}`;
     }
