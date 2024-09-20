@@ -11,7 +11,7 @@ router.get('/:username', async (req, res) => {
   }
 
   try {
-    const response = await fetch(`https://api.twitch.tv/helix/users?login=${username}`, {
+    const response = await fetch(`https://api.twitch.tv/helix/users?id=${username}`, {
       headers: {
         'Authorization': bearerToken,
         'Client-Id': process.env.CLIENT_ID
