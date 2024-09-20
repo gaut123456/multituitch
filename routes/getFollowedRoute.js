@@ -1,38 +1,40 @@
 import express from 'express';
-
 const router = express.Router();
 
-router.get('/:username', async (req, res) => {
-  const username = req.params.username;
-  const bearerToken = req.headers.authorization;
 
-  if (!bearerToken) {
-    return res.status(400).json({ error: 'Bearer token is required' });
+router.get('/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const clientToken = req.headers.authorization;
+  const cursor = req.query.cursor; 
+
+  if (!userId || !clientToken) {
+    return res.status(400).send('User ID and client token are required');
   }
 
   try {
-    const response = await fetch(`https://api.twitch.tv/helix/users?id=${username}`, {
+    let url = `https://api.twitch.tv/helix/channels/followed?user_id=${userId}`;
+    if (cursor) {
+      url += `&after=${cursor}`; 
+    }
+
+    const response = await fetch(url, {
       headers: {
-        'Authorization': bearerToken,
+        'Authorization': clientToken,
         'Client-Id': process.env.CLIENT_ID
       }
     });
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: 'Failed to fetch user data' });
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-    const userData = data.data[0];
+    console.log('Followed channels:', data);
 
-    if (userData?.profile_image_url) {
-      res.json({ profile_picture: userData.profile_image_url });
-    } else {
-      res.status(404).json({ message: 'User not found or no profile picture available' });
-    }
+    res.json(data);
   } catch (error) {
-    console.error('Error fetching user data:', error.message);
-    res.status(500).json({ error: 'Error fetching user data' });
+    console.error('Error fetching followed channels:', error.message);
+    res.status(500).send('Error fetching followed channels');
   }
 });
 
