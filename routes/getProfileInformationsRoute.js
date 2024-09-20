@@ -1,10 +1,8 @@
-const express = require('express');
-require('dotenv').config();
+import express from 'express';
 
-const app = express();
-const PORT = 3000;
+const router = express.Router();
 
-app.get('/:username', async (req, res) => {
+router.get('/:username', async (req, res) => {
     const clientToken = `Bearer ${process.env.CLIENT_TOKEN}`;
     const username = req.params.username;
 
@@ -33,6 +31,4 @@ app.get('/:username', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+export default router;
